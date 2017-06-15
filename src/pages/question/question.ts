@@ -1,263 +1,64 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { QuestionsProvider } from '../../providers/questions/questions';
 
 import { ResultsPage } from '../results/results';
+
+import { QuestionsProvider } from '../../providers/questions/questions';
 import { TestResultsProvider } from '../../providers/test-results/test-results';
 
-
-let apiQuestions = [
-  {
-      "Keyed": true,
-      "Text": "Am the life of the party.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": true,
-      "Text": "Feel comfortable around people.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": true,
-      "Text": "Start conversations.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": true,
-      "Text": "Talk to a lot of different people at parties.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": true,
-      "Text": "Don't mind being the center of attention.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": false,
-      "Text": "Don't talk a lot.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": false,
-      "Text": "Keep in the background.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": false,
-      "Text": "Have little to say.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": false,
-      "Text": "Don't like to draw attention to myself.",
-      "Style": "Extraversion"
-  },
-  {
-      "Keyed": false,
-      "Text": "Am quiet around strangers.",
-      "Style": "Extraversion"
-  }];
-  // {
-  //     "Keyed": true,
-  //     "Text": "Am interested in people.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Sympathize with others' feelings.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Have a soft heart.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Take time out for others.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Feel others' emotions.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Make people feel at ease.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Am not really interested in others.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Insult people.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Am not interested in other people's problems.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Feel little concern for others.",
-  //     "Style": "Agreeableness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Am always prepared.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Pay attention to details.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Get chores done right away.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Like order.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Follow a schedule.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Am exacting in my work.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Leave my belongings around.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Make a mess of things.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Often forget to put things back in their proper place.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Shirk my duties.",
-  //     "Style": "Conscientiousness"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Am relaxed most of the time.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Seldom feel blue.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Get stressed out easily.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Worry about things.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Am easily disturbed.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Get upset easily..",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Change my mood a lot.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Have frequent mood swings.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Get irritated easily.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Often feel blue.",
-  //     "Style": "Emotional Stability"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Have a rich vocabulary.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Have a vivid imagination.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Have excellent ideas.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Am quick to understand things.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Use difficult words.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Spend time reflecting on things.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": true,
-  //     "Text": "Am full of ideas.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Have difficulty understanding abstract ideas.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Am not interested in abstract ideas.",
-  //     "Style": "Intellect"
-  // },
-  // {
-  //     "Keyed": false,
-  //     "Text": "Do not have a good imagination.",
-  //     "Style": "Intellect"
-  // }];
-
+//TODO - make this pull question from the server
+// let apiQuestions = [ //abbreviated question set for testing
+//   {
+//       "Keyed": true,
+//       "Text": "Am the life of the party.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": true,
+//       "Text": "Feel comfortable around people.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": true,
+//       "Text": "Start conversations.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": true,
+//       "Text": "Talk to a lot of different people at parties.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": true,
+//       "Text": "Don't mind being the center of attention.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": false,
+//       "Text": "Don't talk a lot.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": false,
+//       "Text": "Keep in the background.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": false,
+//       "Text": "Have little to say.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": false,
+//       "Text": "Don't like to draw attention to myself.",
+//       "Style": "Extraversion"
+//   },
+//   {
+//       "Keyed": false,
+//       "Text": "Am quiet around strangers.",
+//       "Style": "Extraversion"
+//   }];
+  
 @IonicPage()
 @Component({
   selector: 'page-question',
@@ -268,20 +69,24 @@ export class QuestionPage {
   @ViewChild(Slides) slides:Slides;
   questions: any = [];
   testAnswers: any = {};
-
+  token: any = "";
+  userId: any = "";
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public questionsProv: QuestionsProvider,
     public testResults: TestResultsProvider
   ) {
-      questionsProv.getQuestions(/*insert token here later*/)
+      questionsProv.getQuestions()
       .map(res => res.json())
       .subscribe( res => {
           this.questions = res;
-          for(let singleQuestion of this.questions){
-            console.log(singleQuestion.Text);
-          }
+          console.log(this.questions);
+          // for(let singleQuestion of this.questions){
+          //   console.log(singleQuestion.Text);
+          //   console.log(singleQuestion);
+          // }
       }, error =>{
         alert("Could not retrieve questions");
       });
@@ -297,51 +102,68 @@ export class QuestionPage {
       "Emotional Stability": 0,
       "Intellect": 0
     };
-    
-    
+    this.userId = window.localStorage.getItem('userId');
+    this.token = window.localStorage.getItem('token');
   }
-
-  // This function will call for the correct values of the score depending
-  // on whether it is Keyed false or true
+  
   keyedScore(option) {
-    console.log(option.Keyed);
-    if(option.Keyed === true) {
+    console.log("keyed option is: " + option.Keyed);
+    let optionMod = 0;
+    if(option.Keyed) { //this is if Keyed is set to TRUE
       this.testAnswers[option.Style] += parseInt(option.score);
-      console.log(option.score)
-    } else if(option.Keyed === false && option.score == "1") {
-      this.testAnswers[option.Style] += parseInt("5");
-      console.log("5")
-    } else if(option.Keyed === false && option.score == "2") {
-      this.testAnswers[option.Style] += parseInt("4");
-      console.log("4")
-    } else if(option.Keyed === false && option.score == "3") {
-      this.testAnswers[option.Style] += parseInt(option.score);
-      console.log(option.score)
-    } else if(option.Keyed === false && option.score == "4") {
-      this.testAnswers[option.Style] += parseInt("2");
-      console.log("2")
-    } else if(option.Keyed === false && option.score == "5") {
-      this.testAnswers[option.Style] += parseInt("1");
-      console.log("1")
+    } else if(!option.Keyed) { //this is if Keyed is set to FALSE
+      switch (parseInt(option.score)) { //reverse the scores for negatively keyed questions
+        case 1: { optionMod = 5; console.log(optionMod); break; }
+        case 2: { optionMod = 4; console.log(optionMod); break; }
+        case 3: { optionMod = 3; console.log(optionMod); break; }
+        case 4: { optionMod = 2; console.log(optionMod); break; }
+        case 5: { optionMod = 1; console.log(optionMod); break; }
+      }
+      this.testAnswers[option.Style] += optionMod; //add the reversed score to the right Style
+      console.log("optionMod is now " + optionMod);
     }
   }
-
+  
   // When user clicks Submit button
   nextSlide(option) {
     console.log("Submitted");
     console.log(option.Style);
     this.keyedScore(option);
-    if(this.slides.getActiveIndex() + 1 !== apiQuestions.length) {
+    if(this.slides.getActiveIndex() + 1 !== this.questions.length) {
       this.slides.lockSwipes(false);
-      this.slides.slideTo(this.slides.getActiveIndex() + 1);
+      
+      ////////////////////////////
+      //   Testing Purposes     //
+      //                        //
+      ////////////////////////////
+      
+      //Hacking this to make test faster-
+      //change 49 back to 1 and get rid of testAnwers object to reset to normal
+      this.slides.slideTo(this.slides.getActiveIndex() + 49);
+      this.testAnswers = {
+      "Extraversion": 25,
+      "Agreeableness": 30,
+      "Conscientiousness": 50,
+      "Emotional Stability": 40,
+      "Intellect": 50
+    };
+      
+      ////////////////////////////
+      //       End              //
+      ////////////////////////////
       this.slides.lockSwipes(true);
       console.log("current test answers:", this.testAnswers);
     // All slides have been completed, move onto ResultsPage
     } else {
       this.testAnswers.createDate = new Date().toISOString();
+      // this.testAnswers.userId = "58f83b7bec68fd375bff47c6"; // hard coded userId
+      this.testAnswers.userId = window.localStorage.userId;
       console.log("Finished Test", this.testAnswers)
-      let token = "RscrY7yAS8h0Hx3xF8jf21nLMp5yLfVJfn8I4qLEevbnxaC8KG3qsTBYk5XZIxEe";
-      this.testResults.saveTest(token, this.testAnswers)
+      // 
+      this.token = window.localStorage.getItem('token');
+      let results = this.testAnswers;
+      let token = this.token;
+      this.testResults.saveTest(token, results)
         .map(res => res.json())
         .subscribe(res =>{
           this.navCtrl.setRoot(ResultsPage, {
@@ -350,6 +172,7 @@ export class QuestionPage {
           });
         }, error => {
           alert("Test Results Fudged!!")
+          console.log(this.testAnswers);
           console.log(error)
         });
       }
